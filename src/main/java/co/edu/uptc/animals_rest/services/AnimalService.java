@@ -4,14 +4,17 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import co.edu.uptc.animals_rest.exception.InvalidRangeException;
 import co.edu.uptc.animals_rest.models.Animal;
+import co.edu.uptc.animals_rest.models.AnimalCategoryCount;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,26 +22,49 @@ import org.springframework.beans.factory.annotation.Value;
 
 @Service
 public class AnimalService {
-     private static final Logger logger = LoggerFactory.getLogger(AnimalService.class);
+    private static final Logger logger = LoggerFactory.getLogger(AnimalService.class);
+
     @Value("${animal.file.path}")
     private String filePath;
 
+    // Método para obtener el conteo de animales por categoría
+    public List<AnimalCategoryCount> getAnimalsCountByCategory() throws IOException {
+        List<String> listAnimal = Files.readAllLines(Paths.get(filePath));
+        Map<String, Integer> animalCategoryMap = new HashMap<>();
+        
+        for (String line : listAnimal) {
+            String[] parts = line.split(",");
+            if (parts.length == 2) {
+                String category = parts[0].trim();
+                animalCategoryMap.put(category, animalCategoryMap.getOrDefault(category, 0) + 1);
+            }
+        }
+
+        // Convertir el mapa en una lista de objetos AnimalCategoryCount
+        List<AnimalCategoryCount> categoryCounts = animalCategoryMap.entrySet().stream()
+                .map(entry -> new AnimalCategoryCount(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
+        
+        logger.info("Animal counts by category processed successfully.");
+        
+        return categoryCounts;
+    }
     
     public List<Animal> getAnimalInRange(int from, int to) throws IOException {
         List<String> listAnimal = Files.readAllLines(Paths.get(filePath));
         List<Animal> animales = new ArrayList<>();
         
         if (from < 0 || to >= listAnimal.size() || from > to) {
-            logger.warn("Invalid range: Please check the provided indices. Range: 0 to {}",listAnimal.size());
-             throw new InvalidRangeException("Invalid range: Please check the provided indices.");
+            logger.warn("Invalid range: Please check the provided indices. Range: 0 to {}", listAnimal.size());
+            throw new InvalidRangeException("Invalid range: Please check the provided indices.");
         }
 
         for (String line : listAnimal) {
             String[] parts = line.split(",");
             if (parts.length == 2) {
-                String categoria = parts[0].trim();
-                String nombre = parts[1].trim();                
-                animales.add(new Animal(nombre, categoria));
+                String category = parts[0].trim();
+                String name = parts[1].trim();                
+                animales.add(new Animal(name, category));
             }
         }
     
@@ -48,7 +74,6 @@ public class AnimalService {
     public List<Animal> getAnimalAll() throws IOException {
         List<String> listAnimal = Files.readAllLines(Paths.get(filePath));
         List<Animal> animales = new ArrayList<>();
-        
 
         for (String line : listAnimal) {
             String[] parts = line.split(",");
@@ -75,6 +100,4 @@ public class AnimalService {
                       .filter(animal -> animal.getName().length() < maxLength)
                       .collect(Collectors.toList());
     }
-
 }
-

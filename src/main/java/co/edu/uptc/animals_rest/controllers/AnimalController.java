@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.edu.uptc.animals_rest.models.Animal;
+import co.edu.uptc.animals_rest.models.AnimalCategoryCount;
 import co.edu.uptc.animals_rest.services.AnimalService;
 
 
@@ -48,6 +49,11 @@ public class AnimalController {
     @GetMapping("/name-length/{numberOfLetters}")
     public List<Animal> getAnimalsByNameLength(@PathVariable int numberOfLetters) throws IOException {
         return animalService.getAnimalsByNameLength(numberOfLetters);
+    }
+
+    @GetMapping("/numberByCategory")
+    public List<AnimalCategoryCount> getNumberByCategory() throws IOException {
+        return animalService.getAnimalsCountByCategory();
     }
 
 
