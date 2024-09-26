@@ -1,0 +1,7 @@
+C:\Users\carlo\Documents\GitHub\animals_rest\src\main\java\co\edu\uptc\animals_rest\AnimalRestApplication.java
+C:\Users\carlo\Documents\GitHub\animals_rest\src\main\java\co\edu\uptc\animals_rest\controllers\AnimalController.java
+C:\Users\carlo\Documents\GitHub\animals_rest\src\main\java\co\edu\uptc\animals_rest\exception\ErrorResponse.java
+C:\Users\carlo\Documents\GitHub\animals_rest\src\main\java\co\edu\uptc\animals_rest\exception\GlobalExceptionHandler.java
+C:\Users\carlo\Documents\GitHub\animals_rest\src\main\java\co\edu\uptc\animals_rest\exception\InvalidRangeException.java
+C:\Users\carlo\Documents\GitHub\animals_rest\src\main\java\co\edu\uptc\animals_rest\models\Animal.java
+C:\Users\carlo\Documents\GitHub\animals_rest\src\main\java\co\edu\uptc\animals_rest\services\AnimalService.java

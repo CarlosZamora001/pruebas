@@ -1,0 +1,7 @@
+co\edu\uptc\animals_rest\exception\ErrorResponse.class
+co\edu\uptc\animals_rest\models\Animal.class
+co\edu\uptc\animals_rest\controllers\AnimalController.class
+co\edu\uptc\animals_rest\services\AnimalService.class
+co\edu\uptc\animals_rest\exception\InvalidRangeException.class
+co\edu\uptc\animals_rest\AnimalRestApplication.class
+co\edu\uptc\animals_rest\exception\GlobalExceptionHandler.class
